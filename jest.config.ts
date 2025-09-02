@@ -1,6 +1,11 @@
 import type { Config } from "jest";
 
 const config: Config = {
+	globals: {
+		"ts-jest": {
+			tsconfig: "tsconfig.jest.json",
+		},
+	},
 	preset: "ts-jest/presets/default-esm", // para TypeScript + ESM
 	testEnvironment: "node",
 	extensionsToTreatAsEsm: [".ts"],
