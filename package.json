@@ -7,7 +7,7 @@
 	"scripts": {
 		"build": "tsc",
 		"start": "node dist/index.js",
-		"dev": "node --watch --import tsx src/index.ts",
+		"dev": "tsx --watch src/index.ts",
 		"lint": "eslint . --ext .ts,.tsx",
 		"test": "jest --collect-coverage"
 	},
@@ -16,6 +16,8 @@
 	"license": "ISC",
 	"packageManager": "pnpm@10.7.1",
 	"dependencies": {
+		"@types/bcrypt": "^6.0.0",
+		"bcrypt": "^6.0.0",
 		"cookie-parser": "^1.4.7",
 		"cors": "^2.8.5",
 		"dotenv": "^17.2.1",
