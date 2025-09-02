@@ -95,15 +95,15 @@ export const decodeToken = (
  * @returns {string} Nuevo access token.
  */
 export const refreshAccessToken = (refreshToken: string): string => {
-	if (!process.env.USTAR_JWT_REFRESH_TOKEN) {
+	if (!process.env.USTAR_JWT_REFRESH_SECRET) {
 		throw new Error(
-			"USTAR_JWT_REFRESH_TOKEN is not defined in environment variables."
+			"USTAR_JWT_REFRESH_SECRET is not defined in environment variables."
 		);
 	}
 
 	const decoded = jwt.verify(
 		refreshToken,
-		process.env.USTAR_JWT_REFRESH_TOKEN
+		process.env.USTAR_JWT_REFRESH_SECRET
 	) as JwtPayload;
 
 	if (decoded.exp && decoded.exp < Date.now() / 1000) {
