@@ -1,6 +1,6 @@
 import { IDatabaseClient } from "../IDatabaseClient";
-import { Database as sql3db } from "sqlite3";
 import { open, Database } from "sqlite";
+import sqlite from "sqlite3";
 
 export class SQLiteClient implements IDatabaseClient {
 	private db: Database;
@@ -12,7 +12,7 @@ export class SQLiteClient implements IDatabaseClient {
 	static async create(filename: string): Promise<SQLiteClient> {
 		const db = await open({
 			filename,
-			driver: sql3db,
+			driver: sqlite.Database,
 		});
 
 		await db.exec(`
