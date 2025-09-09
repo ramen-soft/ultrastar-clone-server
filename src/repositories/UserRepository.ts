@@ -18,13 +18,35 @@ class UserRepository implements IBaseRepository<User, "id"> {
 
 	async findById(id: User["id"]): Promise<User | null> {
 		const data = await this.db.findOne(
-			`SELECT id, username FROM users WHERE id = ?`,
+			`SELECT id, username, first_name, last_name FROM users WHERE id = ?`,
 			[id]
 		);
 		if (data) {
 			const u: User = {
 				id: data["id"],
 				username: data["username"],
+				first_name: data["first_name"],
+				last_name: data["last_name"],
+			};
+			return u;
+		}
+		return null;
+	}
+
+	async findByUsername(
+		username: string
+	): Promise<(User & { password: string }) | null> {
+		const data = await this.db.findOne(
+			`SELECT id, username, first_name, last_name, password FROM users WHERE username = ?`,
+			[username]
+		);
+		if (data) {
+			const u: User & { password: string } = {
+				id: data["id"],
+				username: data["username"],
+				first_name: data["first_name"],
+				last_name: data["last_name"],
+				password: data["password"],
 			};
 			return u;
 		}
@@ -50,6 +72,14 @@ class UserRepository implements IBaseRepository<User, "id"> {
 			user.id,
 		]);
 		return user;
+	}
+
+	async updatePassword(user: User, password: string) {
+		const hashedPassword = await bcrypt.hash(password, 10);
+		this.db.execute(`UPDATE users SET password = ? WHERE id = ?`, [
+			hashedPassword,
+			user.id,
+		]);
 	}
 
 	async delete(user: User) {
