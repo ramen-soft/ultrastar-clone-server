@@ -7,6 +7,7 @@ import {
 	refreshAccessToken,
 	TokenType,
 } from "../utils/jwt";
+import { User } from "../models/User";
 
 type AuthTokens = {
 	accessToken: string;
