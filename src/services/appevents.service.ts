@@ -1,5 +1,6 @@
 import { EventEmitter } from "events";
 import { Torrent } from "webtorrent";
+import { Task } from "../models/Task";
 
 interface AppEventsMap {
 	"torrent:added": (magnetLink: string) => void;
@@ -11,6 +12,17 @@ interface AppEventsMap {
 		speed: number
 	) => void;
 	"torrent:done": (torrent: Torrent) => void;
+
+	"task:added": (task: Task) => void;
+	"task:ready": (task: Task) => void;
+	"task:progress": (
+		task: Task,
+		bytes: number,
+		totalBytes: number,
+		progress: number,
+		speed: number
+	) => void;
+	"task:done": (task: Task) => void;
 }
 
 class AppEvents extends EventEmitter {
